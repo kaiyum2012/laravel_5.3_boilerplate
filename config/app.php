@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -178,6 +178,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /* Debug */
+        Barryvdh\Debugbar\ServiceProvider::class
     ],
 
     /*
@@ -225,7 +227,14 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 
 ];
+
+if ( env('APP_ENV', 'local') === 'local' )
+{
+    $results['providers'][] = "Barryvdh\Debugbar\ServiceProvider::class";
+    $results['aliases'][] ="'Debugbar' => Barryvdh\Debugbar\Facade::class,";
+}
